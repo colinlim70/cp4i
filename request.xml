@@ -1,0 +1,25 @@
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:oper="http://www.fineos.com/thirdpartydmsservices/operationtypes">
+   <soap:Header/>
+   <soap:Body>
+      <oper:UploadDocumentRequest>                  
+         <oper:FolderPath>claims</oper:FolderPath>
+         <oper:Filename>306947b9-f876-4931-8744-1f7c1fbc6388.txt</oper:Filename>
+         <oper:File>cid:testDoc.txt</oper:File>
+         <oper:DocumentProperties>                        
+            <oper:CaseId>CLM-85313-02</oper:CaseId>
+            <oper:Status>Draft</oper:Status>                        
+            <oper:FINEOSDocType>Claims Form</oper:FINEOSDocType>  
+            <oper:DMSDocType>Claim Form</oper:DMSDocType>
+            <oper:Contracts>               
+               <oper:ContractReferenceNumber>1830310</oper:ContractReferenceNumber>
+            </oper:Contracts>            
+            <oper:AdditionalInformation>               
+               <oper:Property>
+                  <oper:Name>VIPFlag</oper:Name>
+                  <oper:Value>true</oper:Value>
+               </oper:Property>
+            </oper:AdditionalInformation>                      
+         </oper:DocumentProperties>
+      </oper:UploadDocumentRequest>
+   </soap:Body>
+</soap:Envelope>

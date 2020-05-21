@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL--><wsdl:definitions name="Untitled" targetNamespace="http://www.fineos.com/thirdpartydmsservices/operationtypes" xmlns:jms="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.fineos.com/thirdpartydmsservices/operationtypes" xmlns:jndi="http://www.tibco.com/namespaces/ws/2004/soap/apis/jndi" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap1="http://schemas.xmlsoap.org/wsdl/soap12/">
+  <wsdl:types>
+    <s:schema targetNamespace="http://www.fineos.com/thirdpartydmsservices/operationtypes" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:s="http://www.w3.org/2001/XMLSchema">
+      <s:complexType name="ArrayOfProperty">
+        <s:sequence>
+          <s:element name="Property" type="tns:Property" minOccurs="0" maxOccurs="unbounded">
+            <s:annotation>
+              <s:documentation>Array of properties that are to be associated to the uploaded file on the server</s:documentation>
+            </s:annotation>
+          </s:element>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Contracts">
+        <s:sequence>
+          <s:element name="ContractReferenceNumber" type="s:string" maxOccurs="unbounded"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DocumentProperties">
+        <s:sequence>
+          <s:element name="Title" type="s:string" minOccurs="0">
+            <s:annotation>
+              <s:documentation>The title to use for the document.
+                	In the case of SharePoint if this is not specified then the filename 
+                	will be used for the title.</s:documentation>
+            </s:annotation>
+          </s:element>
+          <s:element name="Description" type="s:string" minOccurs="0">
+            <s:annotation>
+              <s:documentation>The title to use for the document.
+                	In the case of SharePoint if this is not specified then the filename 
+                	will be used for the title.</s:documentation>
+            </s:annotation>
+          </s:element>
+          <s:element name="PartyId" type="s:string" minOccurs="0">
+            <s:annotation>
+              <s:documentation>FINEOS Party ID</s:documentation>
+            </s:annotation>
+          </s:element>
+          <s:element name="CaseId" type="s:string" minOccurs="0">
+            <s:annotation>
+              <s:documentation>FINEOS Case ID</s:documentation>
+            </s:annotation>
+          </s:element>
+          <s:element name="Status" type="s:string">
+            <s:annotation>
+              <s:documentation>FINEOS Document Status</s:documentation>
+            </s:annotation>
+          </s:element>
+          <s:element name="PrivacyTag" type="s:string" minOccurs="0">
+            <s:annotation>
+              <s:documentation>FINEOS PrivacyTag Status</s:documentation>
+            </s:annotation>
+          </s:element>
+          <s:element name="FINEOSDocType" type="s:string">
+            <s:annotation>
+              <s:documentation>FINEOS Document Type</s:documentation>
+            </s:annotation>
+          </s:element>
+          <s:element name="DMSDocType" type="s:string" minOccurs="0">
+            <s:annotation>
+              <s:documentation>DMS Document Type</s:documentation>
+            </s:annotation>
+          </s:element>
+          <s:element name="PartyGroups" type="tns:Groups" minOccurs="0">
+            <s:annotation>
+              <s:documentation>Document groups linked to the party</s:documentation>
+            </s:annotation>
+          </s:element>
+          <s:element name="CaseGroups" type="tns:Groups" minOccurs="0">
+            <s:annotation>
+              <s:documentation>Document groups linked to the case</s:documentation>
+            </s:annotation>
+          </s:element>
+          <s:element name="Contracts" type="tns:Contracts" minOccurs="0">
+            <s:annotation>
+              <s:documentation>FINEOS contracts ID  linked to the document</s:documentation>
+            </s:annotation>
+          </s:element>
+          <s:element name="AdditionalInformation" type="tns:ArrayOfProperty" minOccurs="0">
+            <s:annotation>
+              <s:documentation>Extra properties to add to the uploaded document</s:documentation>
+            </s:annotation>
+          </s:element>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DocumentResponse">
+        <s:all>
+          <s:element name="DMSDocId" type="s:string">
+            <s:annotation>
+              <s:documentation>document identifier of the uploaded file, for Sharepoint this is a GUID</s:documentation>
+            </s:annotation>
+          </s:element>
+          <s:element name="DMSDocType" type="s:string">
+            <s:annotation>
+              <s:documentation>DMS Document type</s:documentation>
+            </s:annotation>
+          </s:element>
+        </s:all>
+      </s:complexType>
+      <s:complexType name="Group">
+        <s:sequence>
+          <s:element name="Name" type="s:string"/>
+          <s:element name="Description" type="s:string" minOccurs="0"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Groups">
+        <s:sequence>
+          <s:element name="Group" type="tns:Group" minOccurs="0" maxOccurs="unbounded"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Property">
+        <s:sequence>
+          <s:element name="Name" type="s:string">
+            <s:annotation>
+              <s:documentation>Name of extra property associated to uploaded file</s:documentation>
+            </s:annotation>
+          </s:element>
+          <s:element name="Value" nillable="true" type="s:string">
+            <s:annotation>
+              <s:documentation>Value of extra property associated to uploaded file.  
+              In the case of SharePoint a nill value will result in an Exception as index properties can't be nulled</s:documentation>
+            </s:annotation>
+          </s:element>
+        </s:sequence>
+      </s:complexType>
+      <s:element name="DeleteDocumentRequest">
+        <s:annotation>
+          <s:documentation>Input parameters for the deleteDocument operation on
+                ThirdPartyDMS web service</s:documentation>
+        </s:annotation>
+        <s:complexType>
+          <s:sequence>
+            <s:element name="UserName" type="s:string" minOccurs="0">
+              <s:annotation>
+                <s:documentation>The user deleting the document.  If this is not specified the user 
+                    authenticating the webservice call is used</s:documentation>
+              </s:annotation>
+            </s:element>
+            <s:element name="DMSDocId" type="s:string">
+              <s:annotation>
+                <s:documentation>Document identifier of the uploaded file, for Sharepoint this is a GUID</s:documentation>
+              </s:annotation>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteDocumentResponse" type="s:anyType">
+        <s:annotation>
+          <s:documentation>Output parameters for the deleteDocument operation on ThirdPartyDMS web service</s:documentation>
+        </s:annotation>
+      </s:element>
+      <s:element name="GetDocumentContentRequest">
+        <s:annotation>
+          <s:documentation>Input parameters for the getDocumentContent operation on
+      			ThirdPartyDMS web service</s:documentation>
+        </s:annotation>
+        <s:complexType>
+          <s:sequence>
+            <s:element name="UserName" type="s:string" minOccurs="0">
+              <s:annotation>
+                <s:documentation>the user uploading the document.  If this is not specified the user 
+	                authenticating the webservice call is used</s:documentation>
+              </s:annotation>
+            </s:element>
+            <s:element name="DMSDocId" type="s:string">
+              <s:annotation>
+                <s:documentation>The GUID and original filepath as returned
+      						from sharepoint - which is of the form
+      						e5756d0f-b1ef-4053-95ff-c5c48390fd68http://iedev153/FINEOSlibrary/TestWordDoc_254.doc</s:documentation>
+              </s:annotation>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDocumentContentResponse">
+        <s:annotation>
+          <s:documentation>Output parameters for the get document URL operation on ThirdPartyDMS web service</s:documentation>
+        </s:annotation>
+        <s:complexType>
+          <s:sequence>
+            <s:element name="DocumentContent" type="s:base64Binary">
+              <s:annotation>
+                <s:documentation>The document content as an array of bytes</s:documentation>
+              </s:annotation>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDocumentURLRequest">
+        <s:annotation>
+          <s:documentation>Input parameters for the getDocumentURL operation on
+      			ThirdPartyDMS web service</s:documentation>
+        </s:annotation>
+        <s:complexType>
+          <s:sequence>
+            <s:element name="DMSDocId" type="s:string">
+              <s:annotation>
+                <s:documentation>The GUID and original filepath as returned
+      						from sharepoint - which is of the form
+      						e5756d0f-b1ef-4053-95ff-c5c48390fd68http://iedev153/FINEOSlibrary/TestWordDoc_254.doc</s:documentation>
+              </s:annotation>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDocumentURLResponse">
+        <s:annotation>
+          <s:documentation>Output parameters for the get document URL operation on ThirdPartyDMS web service</s:documentation>
+        </s:annotation>
+        <s:complexType>
+          <s:sequence>
+            <s:element name="GetDocumentURLResult" type="s:string" minOccurs="0">
+              <s:annotation>
+                <s:documentation>The real URL of the sharepoint document</s:documentation>
+              </s:annotation>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateDocumentPropertiesRequest">
+        <s:annotation>
+          <s:documentation>The filename field from the OCDocument class. The field is usually composed of the GUID supplied by SharePoint when the document was first stored there, and the URL of its location.</s:documentation>
+        </s:annotation>
+        <s:complexType>
+          <s:sequence>
+            <s:element name="UserName" type="s:string" minOccurs="0">
+              <s:annotation>
+                <s:documentation>the user uploading the document.  If this is not specified the user 
+		                authenticating the webservice call is used</s:documentation>
+              </s:annotation>
+            </s:element>
+            <s:element name="DMSDocId" type="s:string">
+              <s:annotation>
+                <s:documentation>DMS Id for the document to update</s:documentation>
+              </s:annotation>
+            </s:element>
+            <s:element name="DocumentProperties" type="tns:DocumentProperties">
+              <s:annotation>
+                <s:documentation>Document indexing properties to update</s:documentation>
+              </s:annotation>
+            </s:element>
+            <s:element name="NotifyFINEOS" type="s:boolean" minOccurs="0">
+              <s:annotation>
+                <s:documentation>optional boolean indicating that FINEOS should be notified of the file upload</s:documentation>
+              </s:annotation>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateDocumentPropertiesResponse" type="tns:DocumentResponse">
+        <s:annotation>
+          <s:documentation>Output parameters for the uploadDocument operation on ThirdPartyDMS web service</s:documentation>
+        </s:annotation>
+      </s:element>
+      <s:element name="UploadDocumentRequest">
+        <s:annotation>
+          <s:documentation>Input parameters for the uploadDocument operation on ThirdPartyDMS web service</s:documentation>
+        </s:annotation>
+        <s:complexType>
+          <s:sequence>
+            <s:element name="UserName" type="s:string" minOccurs="0">
+              <s:annotation>
+                <s:documentation>the user uploading the document.  If this is not specified the user 
+                authenticating the webservice call is used</s:documentation>
+              </s:annotation>
+            </s:element>
+            <s:element name="FolderPath" type="s:string">
+              <s:annotation>
+                <s:documentation>the relative folderpath to upload the file to, 
+                which can contain subfolders to upload the file to.
+              In the case of SharePoint this will be of the form 'mylibrary' or 'deptLibrary/accounting'.</s:documentation>
+              </s:annotation>
+            </s:element>
+            <s:element name="Filename" type="s:string">
+              <s:annotation>
+                <s:documentation>the filename for the file being uploaded, its not a full pathname.</s:documentation>
+              </s:annotation>
+            </s:element>
+            <s:element name="File" type="s:base64Binary">
+              <s:annotation>
+                <s:documentation>the byte[] data for the file.</s:documentation>
+              </s:annotation>
+            </s:element>
+            <s:element name="DocumentProperties" type="tns:DocumentProperties">
+              <s:annotation>
+                <s:documentation>Document indexing properties</s:documentation>
+              </s:annotation>
+            </s:element>
+            <s:element name="NotifyFINEOS" type="s:boolean" minOccurs="0">
+              <s:annotation>
+                <s:documentation>optional boolean indicating that FINEOS should be notified of the file upload</s:documentation>
+              </s:annotation>
+            </s:element>
+            <s:element name="OverwriteIfExists" type="s:boolean" minOccurs="0">
+              <s:annotation>
+                <s:documentation>optional boolean indicating if the server file can be overwritten</s:documentation>
+              </s:annotation>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadDocumentResponse" type="tns:DocumentResponse">
+        <s:annotation>
+          <s:documentation>Output parameters for the uploadDocument operation on ThirdPartyDMS web service</s:documentation>
+        </s:annotation>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:service name="ThirdPartyDmsServices">
+    <wsdl:port name="ThirdPartyDmsServicesSoapHTTPSEndpoint" binding="tns:ThirdPartyDmsServicesSoapHTTPSEndpointBinding">
+      <soap1:address location="https://localhost:8000/services/mediator/fineos/ThirdPartyDms/V1"/>
+    </wsdl:port>
+  </wsdl:service>
+  <wsdl:portType name="ThirdPartyDmsServicesSoap">
+    <wsdl:operation name="updateDocumentProperties">
+      <wsdl:documentation>Operation to reindex a FINEOS document in the external DMS</wsdl:documentation>
+      <wsdl:input message="tns:UpdateDocumentPropertiesSoapIn"/>
+      <wsdl:output message="tns:UpdateDocumentPropertiesSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="uploadDocument">
+      <wsdl:documentation>Operation to Upload a FINEOS document to the external DMS.</wsdl:documentation>
+      <wsdl:input message="tns:UploadDocumentSoapIn"/>
+      <wsdl:output message="tns:UploadDocumentSoapOut"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ThirdPartyDmsServicesSoapJMSEndpointBinding" type="tns:ThirdPartyDmsServicesSoap">
+    <soap1:binding style="document" transport="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS"/>
+    <jms:binding messageFormat="Text"/>
+    <wsdl:operation name="updateDocumentProperties">
+      <soap1:operation style="document" soapAction="http://www.fineos.com/thirdpartydmsservices/operationtypes/updateDocumentProperties" soapActionRequired="true"/>
+      <wsdl:input>
+        <soap1:body use="literal" parts="parameters"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap1:body use="literal" parts="parameters"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="uploadDocument">
+      <soap1:operation style="document" soapAction="http://www.fineos.com/thirdpartydmsservices/operationtypes/uploadDocument" soapActionRequired="true"/>
+      <wsdl:input>
+        <soap1:body use="literal" parts="parameters"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap1:body use="literal" parts="parameters"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ThirdPartyDmsServicesSoapHTTPSEndpointBinding" type="tns:ThirdPartyDmsServicesSoap">
+    <soap1:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="updateDocumentProperties">
+      <soap1:operation style="document" soapAction="http://www.fineos.com/thirdpartydmsservices/operationtypes/updateDocumentProperties" soapActionRequired="true"/>
+      <wsdl:input>
+        <soap1:body use="literal" parts="parameters"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap1:body use="literal" parts="parameters"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="uploadDocument">
+      <soap1:operation style="document" soapAction="http://www.fineos.com/thirdpartydmsservices/operationtypes/uploadDocument" soapActionRequired="true"/>
+      <wsdl:input>
+        <soap1:body use="literal" parts="parameters"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap1:body use="literal" parts="parameters"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:message name="UpdateDocumentPropertiesSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateDocumentPropertiesRequest"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateDocumentPropertiesSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateDocumentPropertiesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="UploadDocumentSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadDocumentRequest">
+      <wsdl:documentation>Upload a file to the DMS server.</wsdl:documentation>
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UploadDocumentSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadDocumentResponse">
+      <wsdl:documentation>Response from uploading a file to the DMS server..</wsdl:documentation>
+    </wsdl:part>
+  </wsdl:message>
+</wsdl:definitions>
